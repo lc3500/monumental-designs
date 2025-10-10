@@ -64,7 +64,7 @@ export default function Home() {
             style={{
               scale: useTransform(
                 useScroll().scrollY,
-                [distanceFromTop, distanceFromTop + window.innerHeight, distanceFromTop + (2 * window.innerHeight)],
+                [distanceFromTop, distanceFromTop + distanceFromTop, distanceFromTop + (2 * distanceFromTop)],
                 [0.5, 0.8, 0.6]
               ),
             }}

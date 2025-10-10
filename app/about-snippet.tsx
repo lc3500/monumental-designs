@@ -21,7 +21,7 @@ export default function AboutSnippet() {
             </motion.div>
             <div className="flex flex-col items-center justify-center text-center ml-10 mr-10">
                 <p className="text-lg max-w-xl text-left">
-                    At Monumental Designs, we specialize in creating beautifully functional kitchen and bath spaces that reflect your lifestyle and taste. Whether you're building your dream home from the ground up or giving your current space a fresh new look, we’re here to guide you every step of the way...
+                    At Monumental Designs, we specialize in creating beautifully functional kitchen and bath spaces that reflect your lifestyle and taste. Whether you&#39;re building your dream home from the ground up or giving your current space a fresh new look, we&#39;re here to guide you every step of the way...
                 </p>
                 <Button variant="ghost" size="lg" className="mt-6 font-bold text-lg" onClick={() => router.push('/about')}>
                     Read more

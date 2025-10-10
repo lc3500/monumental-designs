@@ -27,7 +27,7 @@ export default function AboutMe() {
             </motion.div>
             <section className="px-5 md:pl-20 md:pr-20 pb-20 text-lg text-left">
                 <p>
-                    At Monumental Designs, we specialize in creating beautifully functional kitchen and bath spaces that reflect your lifestyle and taste. Whether you're building your dream home from the ground up or giving your current space a fresh new look, we’re here to guide you every step of the way.
+                    At Monumental Designs, we specialize in creating beautifully functional kitchen and bath spaces that reflect your lifestyle and taste. Whether you&#39;re building your dream home from the ground up or giving your current space a fresh new look, we&#39;re here to guide you every step of the way.
 
 
                 </p>

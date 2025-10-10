@@ -38,7 +38,7 @@ export default function MobileMenu() {
       </DrawerTrigger>
       <DrawerContent className="flex flex-col justify-between h-auto">
         <DrawerHeader className="pt-4">
-          <DrawerTitle className="text-xl sm:text-2xl font-bold">Let's Make it Monumental</DrawerTitle>
+          <DrawerTitle className="text-xl sm:text-2xl font-bold">Let&#39;s Make it Monumental</DrawerTitle>
         </DrawerHeader>
         <nav className="flex flex-col gap-3 mt-6 px-4 flex-grow">
           {navigationItems.map((item) => (

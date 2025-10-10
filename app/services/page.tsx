@@ -25,7 +25,7 @@ export default function ServicesPage() {
                 <ul className="text-lg text-left flex flex-col gap-5">
                     <li className="mb-4">
                         ✔ <span className="text-xl font-bold">Color Consultations (Interior & Exterior): </span>
-                        Struggling to choose the right shade? We'll help you create a cohesive, balanced color scheme that complements your style, lighting, and architectural features—inside and out.
+                            Struggling to choose the right shade? We&#39;ll help you create a cohesive, balanced color scheme that complements your style, lighting, and architectural features—inside and out.
                     </li>
                     <li className="mb-4">
                         ✔ <span className="text-xl font-bold">Remodel Design Support: </span>
@@ -33,7 +33,7 @@ export default function ServicesPage() {
                     </li>
                     <li className="mb-4">
                         ✔ <span className="text-xl font-bold">New Construction Design Guidance: </span>
-                        Starting from the ground up? We'll collaborate with you (and your builder, if needed) to design cohesive spaces, plan layouts, and select everything from flooring to fixtures—so your new home comes together seamlessly.
+                            Starting from the ground up? We&#39;ll collaborate with you (and your builder, if needed) to design cohesive spaces, plan layouts, and select everything from flooring to fixtures—so your new home comes together seamlessly.
                     </li>
                 </ul>
             ),
@@ -46,19 +46,19 @@ export default function ServicesPage() {
                 <ul className="text-lg text-left flex flex-col gap-5">
                     <li className="mb-4">
                         ✔ <span className="text-xl font-bold">Flooring: </span>
-                        We help you choose materials that are not only stylish but also suit your home's layout, lighting, and daily wear.
+                            We help you choose materials that are not only stylish but also suit your home&#39;s layout, lighting, and daily wear.
                     </li>
                     <li className="mb-4">
                         ✔ <span className="text-xl font-bold">Tile & Backsplashes: </span>
-                        From kitchen and bath updates to complete home transformations, we'll guide you through layout ideas, material selections, finishes, and more to ensure your remodel reflects both beauty and function.
+                            From kitchen and bath updates to complete home transformations, we&#39;ll guide you through layout ideas, material selections, finishes, and more to ensure your remodel reflects both beauty and function.
                     </li>
                     <li className="mb-4">
                         ✔ <span className="text-xl font-bold">Furniture & Rugs: </span>
-                        Starting from the ground up? We'll collaborate with you (and your builder, if needed) to design cohesive spaces, plan layouts, and select everything from flooring to fixtures—so your new home comes together seamlessly.
+                            Starting from the ground up? We&#39;ll collaborate with you (and your builder, if needed) to design cohesive spaces, plan layouts, and select everything from flooring to fixtures—so your new home comes together seamlessly.
                     </li>
                     <li className="mb-4">
                         ✔ <span className="text-xl font-bold">Fixtures, Finishes & More: </span>
-                        Lighting, hardware, paint colors, cabinetry, and more—we'll make sure each element fits seamlessly into your plan.
+                            Lighting, hardware, paint colors, cabinetry, and more—we&#39;ll make sure each element fits seamlessly into your plan.
                     </li>
                 </ul>
             ),
@@ -75,11 +75,11 @@ export default function ServicesPage() {
                     </li>
                     <li className="mb-4">
                         ✔ <span className="text-xl font-bold">Elevations & Renderings</span>
-                        From kitchen and bath updates to complete home transformations, we'll guide you through layout ideas, material selections, finishes, and more to ensure your remodel reflects both beauty and function.
+                            From kitchen and bath updates to complete home transformations, we&#39;ll guide you through layout ideas, material selections, finishes, and more to ensure your remodel reflects both beauty and function.
                     </li>
                     <li className="mb-4">
                         ✔ <span className="text-xl font-bold">Material & Finish Selections</span>
-                        Starting from the ground up? We'll collaborate with you (and your builder, if needed) to design cohesive spaces, plan layouts, and select everything from flooring to fixtures—so your new home comes together seamlessly.
+                            Starting from the ground up? We&#39;ll collaborate with you (and your builder, if needed) to design cohesive spaces, plan layouts, and select everything from flooring to fixtures—so your new home comes together seamlessly.
                     </li>
                     <li className="mb-4">
                         ✔ <span className="text-xl font-bold">Personalized Design Guidance</span>
