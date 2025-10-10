@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+"use client";
 import Header from "../header";
 import {
     Carousel,
@@ -7,11 +7,15 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from "@/components/ui/carousel"
-import CoverImage from "@/public/2.png";
+import CoverImage from "@/public/2.webp";
 import Image from "next/image";
 import { ServiceCard } from "@/components/ServiceCard";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
+import { ChevronLeft } from "lucide-react";
 
 export default function ServicesPage() {
+    const router = useRouter();
     const services = [
         {
             title: "Consultation Services",
@@ -79,7 +83,7 @@ export default function ServicesPage() {
                     </li>
                     <li className="mb-4">
                         ✔ <span className="text-xl font-bold">Personalized Design Guidance</span>
-                       Think of us as your design partner—offering inspiration, expert advice, and creative solutions every step of the way.
+                        Think of us as your design partner—offering inspiration, expert advice, and creative solutions every step of the way.
                     </li>
                 </ul>
             ),
@@ -87,11 +91,11 @@ export default function ServicesPage() {
     ];
 
     return (
-        <main className="pt-20">
+        <main className="pt-20 w-screen">
             <Header />
-            <div className="relative w-full flex justify-center items-center mt-10 p-20 bg-primary">
+            <div className="relative w-full flex flex-col md:flex-row  justify-center items-center mt-10 p-20 bg-primary">
                 <Image src={CoverImage} alt="Cover Image" className="absolute top-0 left-0 w-full h-full object-cover opacity-30 z-0" />
-                <h1 className="relative z-10 flex flex-row items-center gap-5 text-6xl text-serif font-bold justify-center text-white">
+                <h1 className="relative z-10 flex flex-wrap md:flex-row items-center gap-5 text-6xl text-serif font-bold justify-start text-white">
                     How can we make it
                     <span className="gradient-background font-bold text-white p-0 m-0">
                         <h2 className="font-bold">your</h2>
@@ -99,13 +103,13 @@ export default function ServicesPage() {
                     home?
                 </h1>
             </div>
-            <section className="text-lg flex flex-col items-center justify-center p-20 text-justify max-w-5xl mx-auto">
+            <section className="text-lg flex flex-col items-center justify-center p-10 md:p-20 text-justify max-w-5xl mx-auto">
                 <p className="">
                     At Monumental Designs, we specialize in creating stunning custom monuments and memorials that honor and celebrate the lives of your loved ones. Our services include:
                 </p>
 
                 {/* Carousel for mobile */}
-                <div className="w-full md:hidden mt-10">
+                <div className="w-[90%] md:hidden mt-10">
                     <Carousel className="w-full max-w-sm mx-auto">
                         <CarouselContent>
                             {services.map((service, index) => (
@@ -126,6 +130,9 @@ export default function ServicesPage() {
                     ))}
                 </div>
             </section>
+            <div className="w-full flex justify-center items-center mb-20">
+                <Button variant="outline" className="ml-10 mb-10 " onClick={() => router.push('/')}><ChevronLeft /> Go Home</Button>
+            </div>
         </main>
     )
 }

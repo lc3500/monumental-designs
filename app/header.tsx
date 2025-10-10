@@ -30,9 +30,12 @@ export default function Header() {
         <motion.header style={{ background, backdropFilter, scale, borderRadius }} className="flex items-center justify-center w-screen top-0 z-50 fixed">
 
 
-            <div id="container" className="flex items-center justify-around h-full w-[90%]">
+            <div id="container" className="flex items-center justify-around h-full w-[90%] font-bold">
                 <NavigationMenu className="hidden md:flex">
-                    <NavigationMenuList>
+                    <NavigationMenuList className="flex flex-row gap-10">
+                        <NavigationMenuItem>
+                            <NavigationMenuLink href="/">Home</NavigationMenuLink>
+                        </NavigationMenuItem>
                         <NavigationMenuItem>
                             <NavigationMenuLink href="/about">About Me</NavigationMenuLink>
                             
@@ -46,6 +49,11 @@ export default function Header() {
                     <NavigationMenuList>
                         <NavigationMenuItem>
                             <NavigationMenuLink href="/services">Services</NavigationMenuLink>
+                        </NavigationMenuItem>
+                        <NavigationMenuItem>
+                        <Button variant="default" className="ml-10" onClick={() => router.push('/contact')}>
+                            Get in Contact
+                        </Button>
                         </NavigationMenuItem>
                     </NavigationMenuList>
                 </NavigationMenu>

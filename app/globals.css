@@ -179,6 +179,10 @@ body {
   color: var(--color-secondary);
 }
 
+.bg-primary-faded {
+  background: color-mix(in srgb, var(--color-primary) 60%, transparent);
+}
+
 .gradient-background {
   padding: 1rem;
   border-radius: var(--radius);

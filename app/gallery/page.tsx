@@ -2,45 +2,47 @@
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import Image from "next/image";
-import Image1 from "../../public/1.png";
-import Image2 from "../../public/2.png";
-import Image3 from "../../public/3.png";
+import Image1 from "../../public/1.webp";
+import Image2 from "../../public/2.webp";
+import Image3 from "../../public/3.webp";
+import Image4 from "../../public/4.webp";
 import { Button } from "@/components/ui/button";
+import { GalleryImage } from "@/components/GalleryImage";
 
 export default function GalleryPage() {
   const router = useRouter();
-  
+
 
   return (
-    <motion.main className="min-h-screen w-screen relative flex flex-col items-center justify-start gap-8 bg-white">
+    <motion.main className="min-h-screen w-screen flex flex-col items-center justify-start gap-8 bg-white">
       {/* The white ink circle that matches the button's layoutId. It will layout-animate from the small
           circle behind the button to this larger positioned element. */}
-      
+      <motion.div layoutId="close-button">
+        <Button className="absolute right-10 top-10" variant={"outline"} onClick={() => router.replace('/')}>
+          Close
+        </Button>
+      </motion.div>
 
       {/* Reveal content after a short delay to allow the layout animation to be visible */}
       <div className="p-10 flex flex-row gap-20 justify-around items-center w-full">
-     <motion.h1 layoutId="title" className="text-6xl font-serif text-primary font-bold">Gallery</motion.h1>
+        <motion.h1 layoutId="title" className="text-6xl font-serif text-primary font-bold">Gallery</motion.h1>
         <motion.div layoutId="gallery-ink" className="flex justify-between items-center">
-          
-          <Button variant={"outline"} onClick={() => router.back()}>
-            Close
-          </Button>
-        </motion.div>
-        </div>
 
-        <div className="grid grid-cols-3 gap-6 mt-6 w-full max-w-6xl px-10">
-          <motion.div className="rounded overflow-hidden h-64 w-full relative" layoutId="image1">
-            <Image src={Image1} alt="1" fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />
-          </motion.div>
-          <motion.div className="rounded overflow-hidden h-64 w-full relative" layoutId="image2">
-            <Image src={Image2} alt="2" fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />
-          </motion.div>
-          <motion.div className="rounded overflow-hidden h-64 w-full relative" layoutId="image3">
-            <Image src={Image3} alt="3" fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />
-          </motion.div>
-        </div>
-    
+
+        </motion.div>
+      </div>
+
+      <div className="grid grid-cols-2 gap-6 mt-6 w-full max-w-6xl px-10">
+        <GalleryImage src={Image1} alt="1" layoutId="image1" shouldAnimate />
+        <GalleryImage src={Image2} alt="2" layoutId="image2" shouldAnimate />
+
+      </div>
+
+      <div className="grid grid-cols-2 gap-6 mt-6 w-full max-w-6xl px-10">
+        <GalleryImage src={Image3} alt="3" layoutId="image3" shouldAnimate />
+        <GalleryImage src={Image4} alt="4" layoutId="image4" shouldAnimate />
+      </div>
+      <br /><br /><br /><br />
     </motion.main>
   );
 }

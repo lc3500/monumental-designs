@@ -2,24 +2,39 @@
 import { Avatar } from "@/components/ui/avatar";
 import Header from "../header";
 import { motion } from "framer-motion";
+import BioPhoto from "@/public/bio-photo.webp";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
+import { ChevronLeft } from "lucide-react";
+
 
 export default function AboutMe() {
+    const router = useRouter();
+    
     return (
-        <main className="pt-20">
+        <main className="pt-20 flex flex-col items-center justify-start w-screen min-h-screen">
             <Header />
-            <motion.div layoutId="about-avatar" className="w-screen h-[500px] flex items-center justify-center flex-row">
+            
+            <motion.div layoutId="about-avatar" className="w-screen h-[500px] flex items-center justify-center flex-row overflow-y-auto">
                 <div className="flex flex-col items-center justify-center">
-                <Avatar className="bg-primary p-32" />
-                <h1 className="text-3xl font-semibold mt-3 font-serif">Nicole Setser</h1>
-                <h2 className="italic">Founder</h2>
-            </div>
+                    <Avatar className="w-72 h-72">
+                        <Image src={BioPhoto} alt="Nicole Setser" className="object-cover" />
+                    </Avatar>
+                    <h1 className="text-3xl font-semibold mt-3 font-serif">Nicole Setser</h1>
+                    <h2 className="italic">Founder</h2>
+                </div>
             </motion.div>
-            <section className="pl-20 pr-20 pb-20 text-lg text-justify">
-                <p>...amet consectetur adipisicing elit. Atque ut optio architecto necessitatibus similique repudiandae, quaerat blanditiis, eum officia, vitae ea! Reprehenderit exercitationem quibusdam, similique nihil ipsam minus cupiditate eaque!
-                Ipsum voluptatibus similique totam animi nostrum. Vel harum, sunt velit quia voluptatum dolores cupiditate tenetur iure sapiente, provident atque illo esse id quo commodi iste quas ratione. Nemo, minus velit!
-                Laudantium autem doloremque fugiat, possimus repellat consectetur nisi perspiciatis fugit excepturi id veritatis quidem eius delectus. Tempore expedita iusto, suscipit architecto ut voluptas eos vitae quis. Possimus quam quidem reiciendis.
-                Voluptate deserunt ratione amet quam necessitatibus consequatur natus laudantium neque culpa! Vel vero alias ipsa, nostrum, repellat ea cumque autem, nobis sequi illum aut culpa vitae labore architecto quibusdam expedita!</p>
+            <section className="px-5 md:pl-20 md:pr-20 pb-20 text-lg text-left">
+                <p>
+                    At Monumental Designs, we specialize in creating beautifully functional kitchen and bath spaces that reflect your lifestyle and taste. Whether you're building your dream home from the ground up or giving your current space a fresh new look, we’re here to guide you every step of the way.
+
+
+                </p>
+                <br />
+                <p>We’re passionate about helping homeowners bring their vision to life — especially during new construction and remodeling projects, where our expertise in layout and design can truly shine. From smart storage solutions to stunning surface finishes, we thrive on coming up with creative, personalized ideas that make your space work better and look amazing.</p>
             </section>
+            <Button variant="outline" className="ml-10 mb-10 " onClick={() => router.push("/")}><ChevronLeft /> Go Home</Button>
         </main>
     )
 }
