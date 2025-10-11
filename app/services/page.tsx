@@ -1,4 +1,3 @@
-"use client";
 import Header from "../header";
 import {
     Carousel,
@@ -10,12 +9,9 @@ import {
 import CoverImage from "@/public/2.webp";
 import Image from "next/image";
 import { ServiceCard } from "@/components/ServiceCard";
-import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
-import { ChevronLeft } from "lucide-react";
+import GoHomeButton from "../../components/GoHomeButton";
 
 export default function ServicesPage() {
-    const router = useRouter();
     const services = [
         {
             title: "Consultation Services",
@@ -131,7 +127,7 @@ export default function ServicesPage() {
                 </div>
             </section>
             <div className="w-full flex justify-center items-center mb-20">
-                <Button variant="outline" className="ml-10 mb-10 " onClick={() => router.push('/')}><ChevronLeft /> Go Home</Button>
+                <GoHomeButton />
             </div>
         </main>
     )

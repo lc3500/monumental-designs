@@ -1,3 +1,4 @@
+"use client";
 import { motion } from "framer-motion";
 import Image, { StaticImageData } from "next/image";
 import { useRouter } from "next/navigation";

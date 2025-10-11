@@ -1,4 +1,3 @@
-"use client";
 import { PageLayout } from "@/components/PageLayout";
 import { PageHero } from "@/components/PageHero";
 import { ContactForm } from "./contact-form";

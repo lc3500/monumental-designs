@@ -17,17 +17,7 @@ export default function ImageDetailPage({ params }: { params: Promise<{ "image-i
         params.then((p) => setImageId(p["image-id"]));
     }, [params]);
 
-    useEffect(() => {
-        if (imageId && !images.includes(imageId)) {
-            router.replace('/gallery');
-        }
-    }, [imageId, router]);
-
-    if (!imageId || !images.includes(imageId)) {
-        return <Skeleton>Please wait...</Skeleton>;
-    }
-
-    const [currentIndex, setCurrentIndex] = useState(images.indexOf(imageId));
+    const [currentIndex, setCurrentIndex] = useState(0);
     const [scale, setScale] = useState(1);
     const [position, setPosition] = useState({ x: 0, y: 0 });
     const imageContainerRef = useRef<HTMLDivElement>(null);
@@ -44,10 +34,17 @@ export default function ImageDetailPage({ params }: { params: Promise<{ "image-i
     const rightIndicatorX = useTransform(x, [-100, 0], [20, 0]);
 
     useEffect(() => {
+        if (imageId && !images.includes(imageId)) {
+            router.replace('/gallery');
+        }
+    }, [imageId, router]);
+
+    useEffect(() => {
         setScale(1);
         scaleRef.current = 1;
         setPosition({ x: 0, y: 0 });
         isNavigatingRef.current = false;
+        setCurrentIndex(images.indexOf(imageId));
     }, [imageId]);
 
     useEffect(() => {
@@ -180,6 +177,11 @@ export default function ImageDetailPage({ params }: { params: Promise<{ "image-i
             }
         }
     };
+
+    // Only render Skeleton after all hooks
+    if (!imageId || !images.includes(imageId)) {
+        return <Skeleton>Please wait...</Skeleton>;
+    }
 
     return (
         <main className="w-screen flex h-screen flex-col items-center justify-start md:justify-center bg-white">

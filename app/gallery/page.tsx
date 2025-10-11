@@ -1,34 +1,22 @@
-"use client";
-import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
 import Image1 from "../../public/1.webp";
 import Image2 from "../../public/2.webp";
 import Image3 from "../../public/3.webp";
 import Image4 from "../../public/4.webp";
-import { Button } from "@/components/ui/button";
 import { GalleryImage } from "@/components/GalleryImage";
+import MotionCloseButton from "./motion-close-button";
+import Title from "./title";
 
 export default function GalleryPage() {
-  const router = useRouter();
-
 
   return (
-    <motion.main className="min-h-screen w-screen flex flex-col items-center justify-start gap-8 bg-white">
+    <main className="min-h-screen w-screen flex flex-col items-center justify-start gap-8 bg-white">
       {/* The white ink circle that matches the button's layoutId. It will layout-animate from the small
           circle behind the button to this larger positioned element. */}
-      <motion.div layoutId="close-button">
-        <Button className="absolute right-10 top-10" variant={"outline"} onClick={() => router.replace('/')}>
-          Close
-        </Button>
-      </motion.div>
+      <MotionCloseButton />
 
       {/* Reveal content after a short delay to allow the layout animation to be visible */}
       <div className="p-10 flex flex-row gap-20 justify-around items-center w-full">
-        <motion.h1 layoutId="title" className="text-6xl font-serif text-primary font-bold">Gallery</motion.h1>
-        <motion.div layoutId="gallery-ink" className="flex justify-between items-center">
-
-
-        </motion.div>
+        <Title />
       </div>
 
       <div className="grid grid-cols-2 gap-6 mt-6 w-full max-w-6xl px-10">
@@ -42,7 +30,7 @@ export default function GalleryPage() {
         <GalleryImage src={Image4} alt="4" layoutId="image4" shouldAnimate />
       </div>
       <br /><br /><br /><br />
-    </motion.main>
+    </main>
   );
 }
 
