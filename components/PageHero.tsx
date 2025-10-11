@@ -31,8 +31,10 @@ export function PageHero({
   gradientOverlay = "linear-gradient(180deg, var(--color-primary), var(--color-secondary))",
 }: PageHeroProps) {
   const scrollY = useScroll().scrollY;
-  const y = enableParallax ? useTransform(scrollY, [0, 300], [0, 150]) : undefined;
-  const scale = enableParallax ? useTransform(scrollY, [0, 300], [1, 0.8]) : undefined;
+  const yTransform = useTransform(scrollY, [0, 300], [0, 150]);
+  const scaleTransform = useTransform(scrollY, [0, 300], [1, 0.8]);
+  const y = enableParallax ? yTransform : undefined;
+  const scale = enableParallax ? scaleTransform : undefined;
 
   return (
     <div

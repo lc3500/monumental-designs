@@ -3,7 +3,7 @@ import Image from "next/image";
 import Header from "./header";
 import LandingSection from "./landing";
 import AboutSnippet from "./about-snippet";
-import { useScroll, useTransform, motion, distance } from "framer-motion";
+import { useScroll, useTransform, motion } from "framer-motion";
 import Image1 from "../public/1.webp";
 import Image2 from "../public/2.webp";
 import { useEffect, useRef } from "react";

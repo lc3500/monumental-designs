@@ -1,22 +1,15 @@
 "use client";
 import Image from "next/image";
 import Logo from "../public/logo.svg";
-import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
-import { Menu } from 'lucide-react';
 import {
     NavigationMenu,
-    NavigationMenuContent,
     NavigationMenuItem,
     NavigationMenuLink,
     NavigationMenuList,
-    NavigationMenuTrigger,
-    navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
-import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { use } from "react";
 
 export default function Header() {
     const router = useRouter();

@@ -1,60 +1,48 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { motion, PanInfo, useMotionValue, useTransform } from "framer-motion";
+import { motion, useMotionValue, useTransform } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { use, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-// Available images in your gallery
 const images = ["1", "2", "3", "4"];
 
 export default function ImageDetailPage({ params }: { params: Promise<{ "image-id": string }> }) {
     const router = useRouter();
-    const { "image-id": imageId } = use(params);
+    const [imageId, setImageId] = useState<string>("");
 
     useEffect(() => {
-        if (!images.includes(imageId)) {
-            // If the imageId is not valid, redirect to the gallery main page
+        params.then((p) => setImageId(p["image-id"]));
+    }, [params]);
+
+    useEffect(() => {
+        if (imageId && !images.includes(imageId)) {
             router.replace('/gallery');
         }
     }, [imageId, router]);
 
-    if (!images.includes(imageId)) {
-        return <Skeleton>Please wait...</Skeleton>; // Or a loading state while redirecting
+    if (!imageId || !images.includes(imageId)) {
+        return <Skeleton>Please wait...</Skeleton>;
     }
 
     const [currentIndex, setCurrentIndex] = useState(images.indexOf(imageId));
-    const [dragDirection, setDragDirection] = useState(0);
-
-    // Zoom state
     const [scale, setScale] = useState(1);
     const [position, setPosition] = useState({ x: 0, y: 0 });
     const imageContainerRef = useRef<HTMLDivElement>(null);
-    const [isDraggingImage, setIsDraggingImage] = useState(false);
     const isNavigatingRef = useRef(false);
-    const scaleRef = useRef(1); // Keep track of current scale for pinch zoom
-    const isPinchingRef = useRef(false); // Track if user is currently pinching
+    const scaleRef = useRef(1);
+    const isPinchingRef = useRef(false);
 
-    // Motion values for swipe animation
     const x = useMotionValue(0);
     const opacity = useTransform(x, [-200, 0, 200], [0.5, 1, 0.5]);
     const rotate = useTransform(x, [-200, 0, 200], [-5, 0, 5]);
-
-    // Swipe indicator transforms (must be defined at top level, not conditionally)
     const leftIndicatorOpacity = useTransform(x, [0, 100], [0, 0.5]);
     const leftIndicatorX = useTransform(x, [0, 100], [0, -20]);
     const rightIndicatorOpacity = useTransform(x, [-100, 0], [0.5, 0]);
     const rightIndicatorX = useTransform(x, [-100, 0], [20, 0]);
 
-    // Swipe threshold (pixels)
-    const swipeConfidenceThreshold = 10000;
-    const swipePower = (offset: number, velocity: number) => {
-        return Math.abs(offset) * velocity;
-    };
-
-    // Reset zoom when image changes
     useEffect(() => {
         setScale(1);
         scaleRef.current = 1;
@@ -62,19 +50,16 @@ export default function ImageDetailPage({ params }: { params: Promise<{ "image-i
         isNavigatingRef.current = false;
     }, [imageId]);
 
-    // Prevent page zoom on mobile
     useEffect(() => {
         const preventZoom = (e: TouchEvent) => {
             if (e.touches.length > 1) {
                 e.preventDefault();
             }
         };
-
         document.addEventListener('touchmove', preventZoom, { passive: false });
         return () => document.removeEventListener('touchmove', preventZoom);
     }, []);
 
-    // Handle wheel zoom
     const handleWheel = (e: React.WheelEvent) => {
         if (e.ctrlKey || e.metaKey) {
             e.preventDefault();
@@ -82,14 +67,12 @@ export default function ImageDetailPage({ params }: { params: Promise<{ "image-i
             const newScale = Math.min(Math.max(1, scale + delta), 4);
             setScale(newScale);
             scaleRef.current = newScale;
-
             if (newScale === 1) {
                 setPosition({ x: 0, y: 0 });
             }
         }
     };
 
-    // Handle pinch zoom
     useEffect(() => {
         const container = imageContainerRef.current;
         if (!container) return;
@@ -107,7 +90,6 @@ export default function ImageDetailPage({ params }: { params: Promise<{ "image-i
                     touch2.clientX - touch1.clientX,
                     touch2.clientY - touch1.clientY
                 );
-                // Use the ref to get the current scale value
                 initialScale = scaleRef.current;
             } else if (e.touches.length === 1) {
                 isPinchingRef.current = false;
@@ -124,14 +106,10 @@ export default function ImageDetailPage({ params }: { params: Promise<{ "image-i
                     touch2.clientX - touch1.clientX,
                     touch2.clientY - touch1.clientY
                 );
-                
-                // Calculate scale with better sensitivity
                 const distanceRatio = currentDistance / initialDistance;
                 const newScale = Math.min(Math.max(1, initialScale * distanceRatio), 4);
-                
                 setScale(newScale);
                 scaleRef.current = newScale;
-
                 if (newScale === 1) {
                     setPosition({ x: 0, y: 0 });
                 }
@@ -153,62 +131,23 @@ export default function ImageDetailPage({ params }: { params: Promise<{ "image-i
             container.removeEventListener('touchmove', handleTouchMove);
             container.removeEventListener('touchend', handleTouchEnd);
         };
-    }, []); // Empty dependency array since we use refs
+    }, []);
 
-    const handleDragStart = (e: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
-        // Prevent drag if user is pinching
+    const handleDragStart = () => {
         if (isPinchingRef.current || scale > 1) {
             return false;
         }
     };
 
-    const handleDrag = (e: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
-        // Ignore drag if pinching
+    const handleDrag = () => {
         if (isPinchingRef.current || scale > 1) {
             return;
-        }
-
-        if (scale > 1) {
-            // When zoomed, handle panning
-            setPosition({
-                x: position.x + info.delta.x,
-                y: position.y + info.delta.y
-            });
-        } else {
-            // Don't check momentum during drag - only on dragEnd
-            // This prevents multiple rapid navigations
         }
     };
 
-    const handleDragEnd = (e: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
-        // Ignore drag end if user was pinching
+    const handleDragEnd = () => {
         if (isPinchingRef.current || scale > 1) {
             return;
-        }
-
-        // Only allow swiping if not zoomed in
-        if (scale > 1) {
-            return;
-        }
-
-        // Prevent multiple navigations from same gesture
-        if (isNavigatingRef.current) {
-            return;
-        }
-
-        const swipe = swipePower(info.offset.x, info.velocity.x);
-
-        if (swipe < -swipeConfidenceThreshold && currentIndex < images.length - 1) {
-            // Swiped left - go to next image
-            isNavigatingRef.current = true;
-            goToNext();
-        } else if (swipe > swipeConfidenceThreshold && currentIndex > 0) {
-            // Swiped right - go to previous image
-            isNavigatingRef.current = true;
-            goToPrevious();
-        } else {
-            // Reset position with animation if not enough momentum
-            x.set(0);
         }
     };
 
@@ -216,16 +155,12 @@ export default function ImageDetailPage({ params }: { params: Promise<{ "image-i
         if (currentIndex < images.length - 1) {
             const nextImage = images[currentIndex + 1];
             setCurrentIndex(currentIndex + 1);
-            setDragDirection(1);
-            
             if (withAnimation) {
-                // Animate out before navigating (for swipe gestures)
                 x.set(-1000);
                 setTimeout(() => {
                     router.push(`/gallery/${nextImage}`);
                 }, 300);
             } else {
-                // Direct navigation (for button clicks)
                 router.push(`/gallery/${nextImage}`);
             }
         }
@@ -235,16 +170,12 @@ export default function ImageDetailPage({ params }: { params: Promise<{ "image-i
         if (currentIndex > 0) {
             const prevImage = images[currentIndex - 1];
             setCurrentIndex(currentIndex - 1);
-            setDragDirection(-1);
-            
             if (withAnimation) {
-                // Animate out before navigating (for swipe gestures)
                 x.set(1000);
                 setTimeout(() => {
                     router.push(`/gallery/${prevImage}`);
                 }, 300);
             } else {
-                // Direct navigation (for button clicks)
                 router.push(`/gallery/${prevImage}`);
             }
         }
@@ -252,18 +183,10 @@ export default function ImageDetailPage({ params }: { params: Promise<{ "image-i
 
     return (
         <main className="w-screen flex h-screen flex-col items-center justify-start md:justify-center bg-white">
-           
             <motion.div className="w-screen relative flex flex-col items-center justify-start md:justify-center">
-                {/* The white ink circle that matches the button's layoutId. It will layout-animate from the small
-          circle behind the button to this larger positioned element. */}
-
-
-                {/* Reveal content after a short delay to allow the layout animation to be visible */}
                 <div className="hidden md:flex flex-row justify-around items-center w-full ">
                     <motion.h1 layoutId="title" className="text-6xl font-serif text-primary font-bold">{imageId}</motion.h1>
-
                 </div>
-
                 <div className="flex flex-row justify-center items-center h-[60vh] w-full px-4 mt-10 md:mt-0">
                     <button
                         onClick={() => goToPrevious(false)}
@@ -272,7 +195,6 @@ export default function ImageDetailPage({ params }: { params: Promise<{ "image-i
                     >
                         <ChevronLeft className="h-12 w-12 sm:h-16 sm:w-16 md:h-24 md:w-24" />
                     </button>
-
                     <div
                         ref={imageContainerRef}
                         className="flex h-[60vh] w-full max-w-[500px] mx-4 justify-center items-center relative touch-none"
@@ -282,7 +204,6 @@ export default function ImageDetailPage({ params }: { params: Promise<{ "image-i
                         onWheel={handleWheel}
                     >
                         {scale === 1 ? (
-                            // Swipe mode - only drag on x-axis
                             <motion.div
                                 drag="x"
                                 layoutId={'image' + imageId}
@@ -307,7 +228,6 @@ export default function ImageDetailPage({ params }: { params: Promise<{ "image-i
                                 />
                             </motion.div>
                         ) : (
-                            // Zoom mode - drag freely to pan
                             <motion.div
                                 drag
                                 dragElastic={0.3}
@@ -328,8 +248,6 @@ export default function ImageDetailPage({ params }: { params: Promise<{ "image-i
                                 />
                             </motion.div>
                         )}
-
-                        {/* Swipe indicator hints - only show when not zoomed */}
                         {scale === 1 && (
                             <>
                                 <motion.div
@@ -353,7 +271,6 @@ export default function ImageDetailPage({ params }: { params: Promise<{ "image-i
                             </>
                         )}
                     </div>
-
                     <button
                         onClick={() => goToNext(false)}
                         disabled={currentIndex === images.length - 1}
@@ -362,8 +279,6 @@ export default function ImageDetailPage({ params }: { params: Promise<{ "image-i
                         <ChevronRight className="h-12 w-12 sm:h-16 sm:w-16 md:h-24 md:w-24" />
                     </button>
                 </div>
-
-                {/* Image counter and zoom level */}
                 <div className="text-center text-muted-foreground space-y-2">
                     <div className="flex md:hidden">{currentIndex + 1} / {images.length}</div>
                     {scale > 1 && (
@@ -384,9 +299,8 @@ export default function ImageDetailPage({ params }: { params: Promise<{ "image-i
                         {scale === 1 ? 'Pinch or Ctrl+Scroll to zoom' : 'Drag to pan'}
                     </div>
                 </div>
-
             </motion.div>
-             <motion.div layoutId="close-button" className="pt-10">
+            <motion.div layoutId="close-button" className="pt-10">
                 <Button variant="destructive" className="h-20" onClick={() => router.push('/gallery')}>
                     ← Back to Gallery
                 </Button>

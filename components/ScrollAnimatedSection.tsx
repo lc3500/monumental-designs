@@ -30,10 +30,13 @@ export function ScrollAnimatedSection({
   scrollRange = [0, 300],
 }: ScrollAnimatedSectionProps) {
   const { scrollY } = useScroll();
-  
-  const opacity = enableFade ? useTransform(scrollY, scrollRange, fadeRange) : undefined;
-  const scale = enableScale ? useTransform(scrollY, scrollRange, scaleRange) : undefined;
-  const y = enableY ? useTransform(scrollY, scrollRange, yRange) : undefined;
+  const fadeTransform =  useTransform(scrollY, scrollRange, fadeRange)
+  const scaleTransform = useTransform(scrollY, scrollRange, scaleRange)
+  const yTransform = useTransform(scrollY, scrollRange, yRange)
+
+  const opacity = enableFade ? fadeTransform : undefined;
+  const scale = enableScale ? scaleTransform : undefined;
+  const y = enableY ? yTransform : undefined;
 
   return (
     <motion.div style={{ opacity, scale, y }} className={className}>

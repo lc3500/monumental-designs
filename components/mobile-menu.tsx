@@ -4,7 +4,6 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Drawer, DrawerClose, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
 import { Menu, X, Home, User, Briefcase, Mail, PictureInPicture } from "lucide-react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export default function MobileMenu() {

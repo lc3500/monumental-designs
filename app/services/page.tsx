@@ -29,7 +29,7 @@ export default function ServicesPage() {
                     </li>
                     <li className="mb-4">
                         ✔ <span className="text-xl font-bold">Remodel Design Support: </span>
-                        From kitchen and bath updates to complete home transformations, we'll guide you through layout ideas, material selections, finishes, and more to ensure your remodel reflects both beauty and function.
+                        From kitchen and bath updates to complete home transformations, we&apos;ll guide you through layout ideas, material selections, finishes, and more to ensure your remodel reflects both beauty and function.
                     </li>
                     <li className="mb-4">
                         ✔ <span className="text-xl font-bold">New Construction Design Guidance: </span>

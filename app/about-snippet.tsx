@@ -1,7 +1,7 @@
 
 "use client";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { Avatar } from "@/components/ui/avatar";
 import BioPhoto from "@/public/bio-photo.webp";
 import Image from "next/image";
 import { useRouter } from "next/navigation";

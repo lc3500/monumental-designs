@@ -1,7 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import Image1 from "../../public/1.webp";
 import Image2 from "../../public/2.webp";
 import Image3 from "../../public/3.webp";
