@@ -7,7 +7,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
-const images = ["1", "2", "3", "4"];
+const images = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"];
 
 export default function ImageDetailPage({ params }: { params: Promise<{ "image-id": string }> }) {
     const router = useRouter();

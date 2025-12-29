@@ -20,14 +20,10 @@ export default function GalleryPage() {
       </div>
 
       <div className="grid grid-cols-2 gap-6 mt-6 w-full max-w-6xl px-10">
-        <GalleryImage src={Image1} alt="1" layoutId="image1" shouldAnimate />
-        <GalleryImage src={Image2} alt="2" layoutId="image2" shouldAnimate />
+        {Array.from({ length: 24 }, (_, i) => (
+          <GalleryImage key={i} src={`/${i + 1}.webp`} alt={`${i + 1}`} />
+        ))}
 
-      </div>
-
-      <div className="grid grid-cols-2 gap-6 mt-6 w-full max-w-6xl px-10">
-        <GalleryImage src={Image3} alt="3" layoutId="image3" shouldAnimate />
-        <GalleryImage src={Image4} alt="4" layoutId="image4" shouldAnimate />
       </div>
       <br /><br /><br /><br />
     </main>
