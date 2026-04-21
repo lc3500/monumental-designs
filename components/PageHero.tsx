@@ -46,6 +46,8 @@ export function PageHero({
         <Image
           src={backgroundImage}
           alt="Cover Image"
+          fill
+          sizes="100vw"
           className="absolute top-0 left-0 w-full h-full object-cover opacity-30 z-0"
         />
       )}
@@ -54,13 +56,15 @@ export function PageHero({
       {logo && (
         <motion.div
           style={{ y, scale }}
-          className="w-full h-full flex flex-col items-center justify-center"
+          className="relative w-full h-full flex flex-col items-center justify-center"
         >
           <Image
             src={logo}
             alt="Logo"
             draggable={false}
-            className="absolute z-0 h-[40rem] opacity-20"
+            fill
+            sizes="100vw"
+            className="absolute z-0 object-contain opacity-20"
           />
         </motion.div>
       )}

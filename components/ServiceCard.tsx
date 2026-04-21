@@ -1,6 +1,7 @@
 "use client";
 import { Drawer, DrawerClose, DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
+import ContentBlocks from "@/components/ContentBlocks";
 import React from "react";
 import { useRouter } from "next/navigation";
 
@@ -8,12 +9,20 @@ interface ServiceCardProps {
   title: string;
   subtitle: string;
   drawerTitle: string;
-  drawerContent: React.ReactNode;
+  drawerContentHtml: string;
+  drawerContentBlocks?: Array<
+    | { type: "paragraph"; text: string }
+    | { type: "heading"; text: string; level?: "h2" | "h3" | "h4" }
+    | { type: "list"; ordered?: boolean; items: string[] }
+    | { type: string; text?: string; level?: "h2" | "h3" | "h4"; ordered?: boolean; items?: string[] }
+    | null
+    | undefined
+  >;
   buttonText?: string;
   className?: string;
 }
 
-export function ServiceCard({ title, subtitle, drawerTitle, drawerContent, buttonText = "View More", className = "" }: ServiceCardProps) {
+export function ServiceCard({ title, subtitle, drawerTitle, drawerContentHtml, drawerContentBlocks, buttonText = "View More", className = "" }: ServiceCardProps) {
   const scrollContainerRef = React.useRef<HTMLDivElement>(null);
   const router = useRouter();
 
@@ -34,7 +43,13 @@ export function ServiceCard({ title, subtitle, drawerTitle, drawerContent, butto
             <DrawerHeader className="flex flex-col items-center justify-center">
               <DrawerTitle className="text-5xl mb-10">{drawerTitle}</DrawerTitle>
             </DrawerHeader>
-            <div className="w-[80%]">{drawerContent}</div>
+            <div className="w-[80%]">
+              {drawerContentBlocks?.length ? (
+                <ContentBlocks blocks={drawerContentBlocks} />
+              ) : (
+                <div className="rich-text" dangerouslySetInnerHTML={{ __html: drawerContentHtml }} />
+              )}
+            </div>
           </div>
           <DrawerFooter className="flex flex-row items-center justify-center ">
             <Button variant="secondary" className="mr-10 text-black shadow-2xl" onClick={() => router.replace("/contact")}>Get in Contact</Button>

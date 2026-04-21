@@ -29,7 +29,7 @@ export function ProfileAvatar({
   const avatarContent = (
     <div className={`flex flex-col items-center justify-center ${className}`}>
       <Avatar style={{ width: size, height: size }}>
-        <Image src={src} alt={alt} className="object-cover" />
+        <Image src={src} alt={alt} fill sizes={`${size}px`} className="object-cover" />
       </Avatar>
       <h1 className="text-3xl font-semibold mt-3 font-serif">{name}</h1>
       {title && <h2 className="italic">{title}</h2>}

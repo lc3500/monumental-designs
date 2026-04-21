@@ -256,3 +256,35 @@ body {
   }
 }
 
+
+.rich-text p {
+  margin-bottom: 1rem;
+}
+
+.rich-text ul,
+.rich-text ol {
+  margin-left: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.rich-text ul {
+  list-style: disc;
+}
+
+.rich-text ol {
+  list-style: decimal;
+}
+
+.rich-text li {
+  margin-bottom: 0.5rem;
+}
+
+.rich-text h4 {
+  font-weight: 700;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.rich-text strong {
+  font-weight: 700;
+}

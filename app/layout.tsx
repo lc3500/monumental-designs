@@ -1,18 +1,8 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import MotionLayout from "@/components/motion-layout";
 import MobileMenu from "@/components/mobile-menu";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import StrapiHealthGate from "@/components/StrapiHealthGate";
 
 export const metadata: Metadata = {
   title: "Monumental Designs",
@@ -119,10 +109,9 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className="antialiased">
         <MotionLayout>
+          <StrapiHealthGate />
           {children}
         </MotionLayout>
         <MobileMenu />

@@ -7,7 +7,14 @@ import Image1 from "../public/1.webp";
 import Image2 from "../public/2.webp";
 import { useRouter } from "next/navigation";
 
-export default function ImagesSection() {
+interface ImagesSectionProps {
+    title: string;
+    ctaLabel: string;
+    ctaHref: string;
+    images: string[];
+}
+
+export default function ImagesSection({ title, ctaLabel, ctaHref, images }: ImagesSectionProps) {
     const scrollY = useScroll().scrollY;
     const picContainerRef = useRef<HTMLDivElement>(null);
     let distanceFromTop = 0;
@@ -22,6 +29,10 @@ export default function ImagesSection() {
         }
     }, [picContainerRef]);
 
+    const imageSources = images.length ? images : ["/1.webp", "/2.webp"];
+    const primaryImage = imageSources[0] || "/1.webp";
+    const secondaryImage = imageSources[1] || imageSources[0] || "/2.webp";
+
     return (<section className="overflow-hidden flex flex-col border-primary-top-bottom justify-center items-center" style={{ backgroundColor: 'rgba(255, 255, 255, 0.4)' }}>
         <div ref={picContainerRef} className="pl-10 pt-10 mb-[-90px] text-5xl text-serif font-bold flex justify-start items-center ">
             <motion.h1
@@ -29,7 +40,7 @@ export default function ImagesSection() {
                 className="text-primary-faded scale-y-120 md:scale-y-200 text-center w-full"
                 style={{ textShadow: '2px 2px 4px rgba(99, 74, 0, 0.1)', transform: `translateY(${marginNegativeValue}px)` }}
             >
-                Refined. Inspirational. Awe-Inspiring.
+                {title}
             </motion.h1>
 
         </div>
@@ -46,7 +57,7 @@ export default function ImagesSection() {
                 }}
             >
                 <div className="w-[60vw] md:w-[45vw] h-150 md:p-10 rounded-lg overflow-hidden flex items-center justify-center">
-                    <LazyImage src={Image1} alt="Sample Image 1" fill className="object-cover" style={{ borderRadius: '0.5rem' }} />
+                    <LazyImage src={primaryImage || Image1} alt="Sample Image 1" fill className="object-cover" style={{ borderRadius: '0.5rem' }} />
                 </div>
             </motion.div>
             <motion.div
@@ -61,7 +72,7 @@ export default function ImagesSection() {
                 }}
             >
                 <div className="w-[60vw] md:w-[45vw] h-150 md:p-10 rounded-lg overflow-hidden flex items-center justify-center">
-                    <LazyImage src={Image2} alt="Sample Image 2" fill className="object-cover" style={{ borderRadius: '0.5rem' }} />
+                    <LazyImage src={secondaryImage || Image2} alt="Sample Image 2" fill className="object-cover" style={{ borderRadius: '0.5rem' }} />
                 </div>
             </motion.div>
 
@@ -72,10 +83,10 @@ export default function ImagesSection() {
                     variant={"default"}
                     className="w-full h-full"
                     onClick={() => {
-                        router.push("/gallery");
+                        router.push(ctaHref);
                     }}
                 >
-                    View Gallery
+                    {ctaLabel}
                 </Button>
             </motion.div>
         </div>

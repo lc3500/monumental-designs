@@ -2,6 +2,10 @@
 
 import { motion } from "framer-motion";
 
-export default function Title() {
-    return(<motion.h1 layoutId="title" className="text-6xl font-serif text-primary font-bold">Gallery</motion.h1>);
+interface TitleProps {
+    title: string;
+}
+
+export default function Title({ title }: TitleProps) {
+    return(<motion.h1 layoutId="title" className="text-6xl font-serif text-primary font-bold">{title}</motion.h1>);
 }
