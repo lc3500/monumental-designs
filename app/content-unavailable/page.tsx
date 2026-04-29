@@ -30,17 +30,11 @@ export default function ContentUnavailablePage() {
         </p>
 
         <div className="mt-6 flex flex-wrap gap-3">
-          <a
-            href="/content-unavailable/"
-            className="rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground shadow"
-          >
-            Try again
-          </a>
-          <a
+                    <a
             href="/"
             className="rounded-full border border-border px-5 py-2 text-sm font-semibold text-foreground"
           >
-            Back to home
+           Try Again
           </a>
         </div>
       </div>
