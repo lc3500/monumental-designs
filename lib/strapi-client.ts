@@ -133,8 +133,8 @@ function unwrapAttributes<T>(data?: { attributes?: T } | T | null): T | undefine
 
 function normalizeSingleMedia(media?: StrapiImageEntity) {
   if (!media) return null;
-  const attributes =
-    "data" in media ? media.data?.attributes : media;
+  const attributes: StrapiImageAttributes | undefined =
+    "url" in media ? media : (media as { data?: { attributes?: StrapiImageAttributes } | null }).data?.attributes;
   if (!attributes?.url) return null;
   return {
     url: normalizeUrl(attributes.url),
@@ -151,7 +151,8 @@ function normalizeMediaCollection(media?: StrapiImageCollection) {
   return (
     rawItems
       ?.map((item) => {
-        const attributes = "attributes" in item ? item.attributes : item;
+        const attributes: StrapiImageAttributes | undefined =
+          "url" in item ? item : (item as { attributes?: StrapiImageAttributes }).attributes;
         if (!attributes?.url) return null;
         return {
           url: normalizeUrl(attributes.url),
