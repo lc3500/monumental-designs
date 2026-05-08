@@ -3,6 +3,7 @@ import "./globals.css";
 import MotionLayout from "@/components/motion-layout";
 import MobileMenu from "@/components/mobile-menu";
 import StrapiHealthGate from "@/components/StrapiHealthGate";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "Monumental Designs",
@@ -115,7 +116,7 @@ export default function RootLayout({
           {children}
         </MotionLayout>
         <MobileMenu />
-        
+        <Toaster position="bottom-right" richColors />
       </body>
     </html>
   );

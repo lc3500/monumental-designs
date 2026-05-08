@@ -2,6 +2,8 @@
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
+import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button"
 import {
@@ -25,7 +27,8 @@ const formSchema = z.object({
 })
 
 export function ContactForm() {
-    // 1. Define your form
+    const [submitting, setSubmitting] = useState(false);
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -33,12 +36,22 @@ export function ContactForm() {
             email: "",
             phone: "",
             message: "",
-        }    });
+        },
+    });
 
-    // 2. Define a submit handler
-    function onSubmit(data: z.infer<typeof formSchema>) {
-        console.log(data);
-        ContactAPI.sendContactForm(data);
+    async function onSubmit(data: z.infer<typeof formSchema>) {
+        setSubmitting(true);
+        try {
+            await ContactAPI.sendContactForm(data);
+            toast.success("Message sent!", { description: "We'll be in touch soon." });
+            form.reset();
+        } catch (err) {
+            toast.error("Failed to send message", {
+                description: err instanceof Error ? err.message : "Please try again.",
+            });
+        } finally {
+            setSubmitting(false);
+        }
     }
 
     return (
@@ -108,7 +121,7 @@ export function ContactForm() {
                     </FormItem>
                 )}
             />
-            <Button type="submit">Submit</Button>
+            <Button type="submit" disabled={submitting}>{submitting ? "Sending…" : "Submit"}</Button>
         </form>
         </Form>
     );

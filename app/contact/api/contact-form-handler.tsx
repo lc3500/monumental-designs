@@ -10,8 +10,12 @@ class ContactAPI {
         });
 
         if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.error || 'Failed to send contact form');
+            let message = 'Failed to send message';
+            try {
+                const errorData = await response.json();
+                if (errorData?.error) message = errorData.error;
+            } catch {}
+            throw new Error(message);
         }
 
         return response.json();
