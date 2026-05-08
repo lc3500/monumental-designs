@@ -269,7 +269,7 @@ export async function getAboutPageClient() {
 export async function getServicesPageClient() {
   const response = await strapiFetch<StrapiResponse<ServicesAttributes>>("service", {
     "populate[hero][populate]": "*",
-    "populate[services][populate]": "*",
+    "populate[services][populate][drawerBlocks][populate]": "*",
   });
   const attributes = unwrapAttributes(response.data);
   const heroBackground = normalizeSingleMedia(attributes?.hero?.backgroundImage);
