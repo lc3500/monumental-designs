@@ -1,7 +1,7 @@
 class ContactAPI {
     static async sendContactForm(data: { name: string; email: string; phone: string; message: string }) {
         const baseUrl = process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
-        const response = await fetch(`${baseUrl}/api/contact-submissions`, {
+        const response = await fetch(`${baseUrl}/api/monumental-contact/contact`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
