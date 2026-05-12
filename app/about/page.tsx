@@ -16,6 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title: seo.metaTitle,
       description: seo.metaDescription,
       url: "https://monumentaldesigns.net/about",
+      ...(seo.shareImageUrl && { images: [{ url: seo.shareImageUrl, alt: seo.metaTitle }] }),
     },
   };
 }

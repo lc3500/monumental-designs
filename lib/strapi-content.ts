@@ -18,29 +18,78 @@ import {
 type SeoComponent = {
   metaTitle?: string;
   metaDescription?: string;
+  shareImage?: StrapiImageEntity;
 };
 
-export async function getPageSeo(
-  endpoint: string,
-  fallbackTitle: string,
-  fallbackDescription: string
-): Promise<{ metaTitle: string; metaDescription: string }> {
+type GlobalAttributes = {
+  defaultSeo?: SeoComponent;
+  siteName?: string;
+  siteDescription?: string;
+};
+
+export type SeoResult = {
+  metaTitle: string;
+  metaDescription: string;
+  shareImageUrl: string;
+};
+
+const HARDCODED_DEFAULTS: SeoResult = {
+  metaTitle: "Monumental Designs",
+  metaDescription:
+    "Fort Wayne interior designer specializing in custom kitchen & bath design, home remodels, and residential interior design across northeast Indiana.",
+  shareImageUrl: "",
+};
+
+export async function getGlobalSeo(): Promise<SeoResult> {
   try {
-    const response = await strapiFetch<StrapiResponse<{ seo?: SeoComponent }>>(
-      endpoint,
-      { populate: { seo: true } }
-    );
+    const response = await strapiFetch<StrapiResponse<GlobalAttributes>>("global", {
+      populate: { defaultSeo: { populate: "*" } },
+    });
     const attributes =
       response.data && "attributes" in response.data
         ? response.data.attributes
         : response.data;
     return {
-      metaTitle: attributes?.seo?.metaTitle || fallbackTitle,
-      metaDescription: attributes?.seo?.metaDescription || fallbackDescription,
+      metaTitle: attributes?.defaultSeo?.metaTitle || HARDCODED_DEFAULTS.metaTitle,
+      metaDescription:
+        attributes?.defaultSeo?.metaDescription || HARDCODED_DEFAULTS.metaDescription,
+      shareImageUrl:
+        normalizeSingleMedia(attributes?.defaultSeo?.shareImage)?.url || "",
     };
   } catch {
-    return { metaTitle: fallbackTitle, metaDescription: fallbackDescription };
+    return HARDCODED_DEFAULTS;
   }
+}
+
+export async function getPageSeo(
+  endpoint: string,
+  fallbackTitle: string,
+  fallbackDescription: string
+): Promise<SeoResult> {
+  const [pageRes, globalSeo] = await Promise.all([
+    strapiFetch<StrapiResponse<{ seo?: SeoComponent }>>(endpoint, {
+      populate: { seo: { populate: "*" } },
+    }).catch(() => null),
+    getGlobalSeo(),
+  ]);
+
+  const attributes =
+    pageRes?.data && "attributes" in pageRes.data
+      ? pageRes.data.attributes
+      : pageRes?.data;
+
+  return {
+    metaTitle:
+      attributes?.seo?.metaTitle || globalSeo.metaTitle || fallbackTitle,
+    metaDescription:
+      attributes?.seo?.metaDescription ||
+      globalSeo.metaDescription ||
+      fallbackDescription,
+    shareImageUrl:
+      normalizeSingleMedia(attributes?.seo?.shareImage)?.url ||
+      globalSeo.shareImageUrl ||
+      "",
+  };
 }
 
 type LandingComponent = {
