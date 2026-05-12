@@ -45,10 +45,11 @@ export async function getGlobalSeo(): Promise<SeoResult> {
     const response = await strapiFetch<StrapiResponse<GlobalAttributes>>("global", {
       populate: { defaultSeo: { populate: "*" } },
     });
-    const attributes =
+    const attributes = (
       response.data && "attributes" in response.data
         ? response.data.attributes
-        : response.data;
+        : response.data
+    ) as GlobalAttributes | null;
     return {
       metaTitle: attributes?.defaultSeo?.metaTitle || HARDCODED_DEFAULTS.metaTitle,
       metaDescription:
@@ -73,10 +74,11 @@ export async function getPageSeo(
     getGlobalSeo(),
   ]);
 
-  const attributes =
+  const attributes = (
     pageRes?.data && "attributes" in pageRes.data
       ? pageRes.data.attributes
-      : pageRes?.data;
+      : pageRes?.data
+  ) as { seo?: SeoComponent } | null;
 
   return {
     metaTitle:
