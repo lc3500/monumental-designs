@@ -1,67 +1,25 @@
-"use client";
+import type { Metadata } from "next";
+import { getPageSeo } from "@/lib/strapi-content";
+import GalleryClient from "./GalleryClient";
 
-import { GalleryImage } from "@/components/GalleryImage";
-import MotionCloseButton from "./motion-close-button";
-import Title from "./title";
-import { getGalleryPageClient } from "@/lib/strapi-client";
-import { useEffect, useState } from "react";
-import { Skeleton } from "@/components/ui/skeleton";
-
-type GalleryData = Awaited<ReturnType<typeof getGalleryPageClient>>;
-
-export default function GalleryPage() {
-  const [gallery, setGallery] = useState<GalleryData | null>(null);
-
-  useEffect(() => {
-    const load = async () => {
-      try {
-        const data = await getGalleryPageClient();
-        setGallery(data);
-      } catch (error) {
-        window.location.href = "/content-unavailable";
-      }
-    };
-
-    load();
-  }, []);
-
-  if (!gallery) {
-    return (
-      <main className="min-h-screen w-screen flex flex-col items-center justify-start gap-8 bg-white">
-        <MotionCloseButton />
-        <div className="p-10 flex flex-row gap-20 justify-around items-center w-full">
-          <Skeleton className="h-10 w-1/2" />
-        </div>
-        <div className="grid grid-cols-2 gap-6 mt-6 w-full max-w-6xl px-10">
-          <Skeleton className="h-48 w-full" />
-          <Skeleton className="h-48 w-full" />
-          <Skeleton className="h-48 w-full" />
-          <Skeleton className="h-48 w-full" />
-        </div>
-        <br />
-        <br />
-        <br />
-        <br />
-      </main>
-    );
-  }
-
-  return (
-    <main className="min-h-screen w-screen flex flex-col items-center justify-start gap-8 bg-white">
-      <MotionCloseButton />
-
-      <div className="p-10 flex flex-row gap-20 justify-around items-center w-full">
-        <Title title={gallery.title} />
-      </div>
-
-      <div className="grid grid-cols-2 gap-6 mt-6 w-full max-w-6xl px-10">
-        {gallery.images.map((image, index) => (
-          <GalleryImage key={image} src={image} alt={`${index + 1}`} />
-        ))}
-      </div>
-      <br /><br /><br /><br />
-    </main>
+export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getPageSeo(
+    "gallery",
+    "Design Gallery — Monumental Designs",
+    "Browse interior design projects by Monumental Designs — custom kitchens, bathrooms, and residential spaces in Fort Wayne, Indiana."
   );
+  return {
+    title: seo.metaTitle,
+    description: seo.metaDescription,
+    alternates: { canonical: "https://monumentaldesigns.net/gallery" },
+    openGraph: {
+      title: seo.metaTitle,
+      description: seo.metaDescription,
+      url: "https://monumentaldesigns.net/gallery",
+    },
+  };
 }
 
-// (no top-level effects) all effects run inside the component
+export default function Page() {
+  return <GalleryClient />;
+}

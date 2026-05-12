@@ -5,32 +5,49 @@ import MobileMenu from "@/components/mobile-menu";
 import StrapiHealthGate from "@/components/StrapiHealthGate";
 import { Toaster } from "sonner";
 
+const SITE_URL = "https://monumentaldesigns.net";
+
 export const metadata: Metadata = {
-  title: "Monumental Designs",
-  description: "Interior Design in Fort Wayne, IN",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "Monumental Designs",
+    template: "%s | Monumental Designs",
+  },
+  description:
+    "Fort Wayne interior designer specializing in custom kitchen & bath design, home remodels, and residential interior design across northeast Indiana.",
   applicationName: "Monumental Designs",
   authors: [{ name: "Nicole Setser", url: "https://www.nicolesetser.com" }],
   keywords: [
-    "Interior Design",
-    "Kitchen Design",
-    "Bath Design",
-    "Fort Wayne Interior Designer",
-    "Home Renovation",
-    "Kitchen Remodel",
-    "Bathroom Remodel",
-    "Custom Kitchen Design",
-    "Custom Bath Design",
-    "Residential Interior Design",
-    "Interior Decorator",
-    "Home Improvement",
-    "Space Planning",
-    "Interior Styling",
+    "interior design indiana",
+    "indiana interior designer",
+    "northeast indiana interior designer",
+    "fort wayne interior designer",
+    "fort wayne indiana interior design",
+    "fort wayne home design",
+    "fort wayne kitchen remodel",
+    "fort wayne bathroom remodel",
+    "indiana kitchen design",
+    "indiana bathroom remodel",
+    "interior design fort wayne",
+    "kitchen design fort wayne",
+    "bath design fort wayne",
+    "home renovation fort wayne",
+    "custom kitchen design",
+    "custom bath design",
+    "residential interior design",
+    "interior decorator",
+    "space planning",
     "Monumental Designs",
+    "Nicole Setser",
   ],
+  alternates: {
+    canonical: SITE_URL,
+  },
   openGraph: {
     title: "Monumental Designs",
-    description: "Interior Design in Fort Wayne, IN",
-    url: "https://www.monumentaldesigns.com",
+    description:
+      "Fort Wayne interior designer specializing in custom kitchen & bath design, home remodels, and residential interior design across northeast Indiana.",
+    url: SITE_URL,
     siteName: "Monumental Designs",
     images: [
       {
@@ -43,13 +60,23 @@ export const metadata: Metadata = {
         url: "/1.webp",
         width: 800,
         height: 600,
-        alt: "Fireplace, Living Room",
-      }
+        alt: "Interior design project by Monumental Designs",
+      },
     ],
-    locale: "en-US",
+    locale: "en_US",
     type: "website",
   },
-
+  twitter: {
+    card: "summary_large_image",
+    title: "Monumental Designs",
+    description:
+      "Fort Wayne interior designer specializing in custom kitchen & bath design and residential interior design across northeast Indiana.",
+    images: ["/logo.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({
@@ -59,47 +86,55 @@ export default function RootLayout({
 }>) {
   const structuredData = {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "name": "Monumental Designs",
-    "description": "Interior Design Services in Fort Wayne, IN. Specializing in custom kitchen and bath design, home remodels, and residential interior design.",
-    "url": "https://monumentaldesigns.net",
-    "logo": "https://monumentaldesigns.net/logo.png",
-    "image": "https://monumentaldesigns.net/1.webp",
-    "telephone": "+1-260-xxx-xxxx", // Update with actual phone number
-    "email": "nicole@monumentaldesigns.com",
-    "address": {
+    "@type": ["LocalBusiness", "ProfessionalService"],
+    name: "Monumental Designs",
+    description:
+      "Interior design services in Fort Wayne, IN. Specializing in custom kitchen and bath design, home remodels, and residential interior design across northeast Indiana.",
+    url: SITE_URL,
+    logo: `${SITE_URL}/logo.png`,
+    image: `${SITE_URL}/1.webp`,
+    telephone: "+1-260-704-4684",
+    email: "nicole@monumentaldesigns.com",
+    address: {
       "@type": "PostalAddress",
-      "addressLocality": "Fort Wayne",
-      "addressRegion": "IN",
-      "addressCountry": "US"
+      addressLocality: "Fort Wayne",
+      addressRegion: "IN",
+      addressCountry: "US",
     },
-    "geo": {
+    geo: {
       "@type": "GeoCoordinates",
-      "latitude": "41.0793",
-      "longitude": "-85.1394"
+      latitude: "41.0793",
+      longitude: "-85.1394",
     },
-    "openingHoursSpecification": {
+    hasMap: "https://maps.google.com/?q=Fort+Wayne,+IN",
+    openingHoursSpecification: {
       "@type": "OpeningHoursSpecification",
-      "dayOfWeek": [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday"
-      ],
-      "opens": "09:00",
-      "closes": "17:00"
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      opens: "09:00",
+      closes: "17:00",
     },
-    "priceRange": "$$",
-    "serviceArea": {
+    priceRange: "$$",
+    areaServed: [
+      { "@type": "City", name: "Fort Wayne", containedInPlace: { "@type": "State", name: "Indiana" } },
+      { "@type": "State", name: "Indiana" },
+    ],
+    serviceArea: {
       "@type": "GeoCircle",
-      "geoMidpoint": {
+      geoMidpoint: {
         "@type": "GeoCoordinates",
-        "latitude": "41.0793",
-        "longitude": "-85.1394"
+        latitude: "41.0793",
+        longitude: "-85.1394",
       },
-      "geoRadius": "50000"
-    }
+      geoRadius: "80000",
+    },
+    knowsAbout: [
+      "Interior Design",
+      "Kitchen Design",
+      "Bathroom Remodeling",
+      "Home Renovation",
+      "Space Planning",
+      "Residential Interior Design",
+    ],
   };
 
   return (

@@ -15,6 +15,34 @@ import {
   fallbackServices,
 } from "@/content-backups/strapi-fallbacks";
 
+type SeoComponent = {
+  metaTitle?: string;
+  metaDescription?: string;
+};
+
+export async function getPageSeo(
+  endpoint: string,
+  fallbackTitle: string,
+  fallbackDescription: string
+): Promise<{ metaTitle: string; metaDescription: string }> {
+  try {
+    const response = await strapiFetch<StrapiResponse<{ seo?: SeoComponent }>>(
+      endpoint,
+      { populate: { seo: true } }
+    );
+    const attributes =
+      response.data && "attributes" in response.data
+        ? response.data.attributes
+        : response.data;
+    return {
+      metaTitle: attributes?.seo?.metaTitle || fallbackTitle,
+      metaDescription: attributes?.seo?.metaDescription || fallbackDescription,
+    };
+  } catch {
+    return { metaTitle: fallbackTitle, metaDescription: fallbackDescription };
+  }
+}
+
 type LandingComponent = {
   location?: string;
   headline?: string;
